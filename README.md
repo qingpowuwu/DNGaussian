@@ -28,14 +28,23 @@ If encountering installation problem of the `diff-gaussian-rasterization` or `gr
 
 ### LLFF
 
-1. Download LLFF from [the official download link](https://drive.google.com/drive/folders/128yBriW1IG_3NJ5Rp7APSTZsJqdJdfc1).
+1. Download LLFF from [the official download link](https://drive.google.com/drive/folders/128yBriW1IG_3NJ5Rp7APSTZsJqdJdfc1). or https://www.kaggle.com/datasets/arenagrenade/llff-dataset-full?resource=download
 
 2. Generate monocular depths by DPT:
 
    ```bash
    cd dpt
    python get_depth_map_for_llff_dtu.py --root_path $<dataset_path_for_llff> --benchmark LLFF
+
+   wget https://github.com/isl-org/MiDaS/releases/download/v3/dpt_hybrid_384.pt -P /root/.cache/torch/hub/checkpoints/
+   cd dpt
+   python get_depth_map_for_llff_dtu.py --root_path /home/qingpo.wuwu1/Project_2_3dGS_Cars/1_Ours/DNGaussian/data/nerf_llff_data --benchmark LLFF
    ```
+* 这个代码会保存 depth.png 成 16 bits (i.e， 像素的最大值能到 65535，如果是 8 bits 的话最大值能到 255) =》因为 This larger range allows for more precise depth information to be stored in the image. While an 8-bit image can only represent 256 different depth levels, a 16-bit image can represent 65536 different depth levels.
+  
+   <img width="1843" alt="截屏2024-10-18 18 04 12" src="https://github.com/user-attachments/assets/04622e74-4da1-4b9a-9efb-89f65529904a">
+
+<img width="1377" alt="截屏2024-10-18 18 05 18" src="https://github.com/user-attachments/assets/da599633-4495-43a0-b468-61110c57c667">
 
 3. Start training and testing:
 
